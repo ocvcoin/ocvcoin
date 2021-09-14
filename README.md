@@ -13,3 +13,31 @@ wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU18_INS
 
 For more details (OCVCOIN'S POW SERVER):
 [https://github.com/ocvcoin/pow_server/blob/main/pow_server.py](https://github.com/ocvcoin/pow_server/blob/main/pow_server.py)
+
+
+
+Sample Commands
+----------------
+
+
+
+Create Wallet:
+
+```
+sudo ocvcoin-cli createwallet ""
+
+```
+
+Get Your Wallet Address:
+
+```
+sudo ocvcoin-cli getaddressesbylabel ""
+
+```
+
+Simply trying to mine one block:
+
+```
+sudo ocvcoin-cli generatetoaddress 1 yourwalletaddress
+
+```
