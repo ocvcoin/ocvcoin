@@ -7,12 +7,15 @@ For more technical details (OCVCOIN'S POW SERVER):
 [https://github.com/ocvcoin/pow_server/blob/main/pow_server.py](https://github.com/ocvcoin/pow_server/blob/main/pow_server.py)
 
 
+
+
 AUTOMATIC INSTALLATION FOR UBUNTU 18
 
 ```
 wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU18_INSTALLER.sh | sudo bash
 
 ```
+
 
 
 Block Explorer:
@@ -22,8 +25,6 @@ Block Explorer:
 
 Sample Commands
 ----------------
-
-
 
 Create Wallet:
 
