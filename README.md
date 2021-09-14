@@ -15,7 +15,8 @@ wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU18_INS
 ```
 
 
-
+Block Explorer:
+[https://explorer.ocvcoin.com/](https://explorer.ocvcoin.com/)
 
 
 
