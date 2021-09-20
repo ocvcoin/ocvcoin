@@ -6,6 +6,7 @@ It is a modified version of bitcoin and it's pow mechanism. Heavy computations a
 For more technical details (OCVCOIN'S POW SERVER):
 [https://github.com/ocvcoin/pow_server/blob/main/pow_server.py](https://github.com/ocvcoin/pow_server/blob/main/pow_server.py)
 
+HOW TO INSTALL & MINING VIDEO: [https://youtu.be/z3Eh1TgPu78](https://youtu.be/z3Eh1TgPu78)
 
 
 Dowload
