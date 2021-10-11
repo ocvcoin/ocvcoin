@@ -120,9 +120,13 @@ uint256 CBlockHeader::GetHash() const
 		if(retry_count > 100)		
 			exit(EXIT_FAILURE);
 	
+		#ifdef WIN32
+			Sleep(1000);//1sec
+		#else
+			sleep(1000);//1sec
+		#endif
 
-
-		Sleep(1000);//1sec
+		
 		
 	}
 	
