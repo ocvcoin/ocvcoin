@@ -5,7 +5,7 @@ It is modified version of bitcoin and it's pow mechanism. Heavy computations are
 
 HOW TO INSTALL & MINING VIDEO: [https://youtu.be/z3Eh1TgPu78](https://youtu.be/z3Eh1TgPu78)
 
-BITCOINTALK.ORG TOPIC: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
+COMMUNITY: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
 
 DISCORD: [https://discord.gg/hPymgsnxfw](https://discord.gg/hPymgsnxfw)
 
