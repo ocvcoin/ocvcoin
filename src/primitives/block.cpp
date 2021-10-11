@@ -123,7 +123,7 @@ uint256 CBlockHeader::GetHash() const
 		#ifdef WIN32
 			Sleep(1000);//1sec
 		#else
-			sleep(1000);//1sec
+			sleep(1);//1sec
 		#endif
 
 		
