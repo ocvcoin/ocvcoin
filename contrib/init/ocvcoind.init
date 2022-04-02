@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+#  ocvcoind The ocvcoin core server.
+#
+#
+# chkconfig: 345 80 20
+# description: ocvcoind
+# processname: ocvcoind
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/ocvcoind, see below
+if [ -f /etc/sysconfig/ocvcoind ]; then
+        . /etc/sysconfig/ocvcoind
+fi
+
+RETVAL=0
+
+prog=ocvcoind
+# you can override the lockfile via OCVCOIND_LOCKFILE in /etc/sysconfig/ocvcoind
+lockfile=${OCVCOIND_LOCKFILE-/var/lock/subsys/ocvcoind}
+
+# ocvcoind defaults to /usr/bin/ocvcoind, override with OCVCOIND_BIN
+ocvcoind=${OCVCOIND_BIN-/usr/bin/ocvcoind}
+
+# ocvcoind opts default to -disablewallet, override with OCVCOIND_OPTS
+ocvcoind_opts=${OCVCOIND_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $ocvcoind $ocvcoind_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -t600
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
