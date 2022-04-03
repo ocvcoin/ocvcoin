@@ -2,11 +2,6 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-
-CFLAGS += `pkg-config --cflags opencv`
-LIBS += `pkg-config --libs opencv`
-
-
 # Pattern rule to print variables, e.g. make print-top_srcdir
 print-%: FORCE
 	@echo '$*'='$($*)'
