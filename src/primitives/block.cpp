@@ -15,7 +15,27 @@
 
 #include <crypto/sha512.h>
 #include <crypto/sha256.h>
+
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+
+// Must be Version 70bbf17b133496bd7d54d034b0f94bd869e0e810 !
+// Otherwise it won't work.
+// Download Link: https://github.com/opencv/opencv/archive/70bbf17b133496bd7d54d034b0f94bd869e0e810.zip
+
 #include <opencv2/opencv.hpp>
+
+/*-----------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
 
 using namespace std;
 
