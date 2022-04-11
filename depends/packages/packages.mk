@@ -1,4 +1,4 @@
-packages:=boost libevent
+packages:=boost libevent opencv
 
 qrencode_packages = qrencode
 
