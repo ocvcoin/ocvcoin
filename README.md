@@ -1,82 +1,47 @@
-Ocvcoin Core integration/staging tree
-=====================================
-
-https://bitcoincore.org
-
-For an immediately usable, binary version of the Ocvcoin Core software, see
-https://bitcoincore.org/en/download/.
-
-Further information about Ocvcoin Core is available in the [doc folder](/doc).
 
 What is Ocvcoin?
 ----------------
 
-Ocvcoin is an experimental digital currency that enables instant payments to
-anyone, anywhere in the world. Ocvcoin uses peer-to-peer technology to operate
-with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Ocvcoin Core is the name of open source
-software which enables the use of this currency.
+Ocvcoin is a modified version of Bitcoin. Heavy computations are used for resistance to asics. Uses the Open CV library for these computations.
 
-For more information read the original Ocvcoin whitepaper.
+HOW TO INSTALL OCVCOIN CORE: [https://youtu.be/ZiHZtsnyIyw](https://youtu.be/ZiHZtsnyIyw)
 
-License
--------
+COMMUNITY: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
 
-Ocvcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see https://opensource.org/licenses/MIT.
+DISCORD: [https://discord.gg/NYYarPzNRA](https://discord.gg/NYYarPzNRA)
 
-Development Process
--------------------
+TWITTER: [https://twitter.com/ocvcoin](https://twitter.com/ocvcoin)
 
-The `master` branch is regularly built (see `doc/build-*.md` for instructions) and tested, but it is not guaranteed to be
-completely stable. [Tags](https://github.com/ocvcoin/ocvcoin/tags) are created
-regularly from release branches to indicate new official, stable release versions of Ocvcoin Core.
+Dowload
+----------------
 
-The https://github.com/ocvcoin-core/gui repository is used exclusively for the
-development of the GUI. Its master branch is identical in all monotree
-repositories. Release branches and tags do not exist, so please do not fork
-that repository unless it is for development reasons.
+(ONLY FOR 64 BIT WINDOWS)
 
-The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md)
-and useful hints for developers can be found in [doc/developer-notes.md](doc/developer-notes.md).
+OCVCOIN CORE: [ocvcoin-22.0.0-win64-setup.exe](https://github.com/ocvcoin/ocvcoin/releases/download/v22.0/ocvcoin-22.0.0-win64-setup.exe)
 
-Testing
--------
 
-Testing and code review is the bottleneck for development; we get more pull
-requests than we can review and test on short notice. Please be patient and help out by testing
-other people's pull requests, and remember this is a security-critical project where any mistake might cost people
-lots of money.
+How Can I Mining?
+----------------
 
-### Automated Testing
+HOW TO MINE OCVCOIN: [https://youtu.be/fNamC3YEdFc](https://youtu.be/fNamC3YEdFc)
 
-Developers are strongly encouraged to write [unit tests](src/test/README.md) for new code, and to
-submit new unit tests for old code. Unit tests can be compiled and run
-(assuming they weren't disabled in configure) with: `make check`. Further details on running
-and extending unit tests can be found in [/src/test/README.md](/src/test/README.md).
+No mining pool yet. You can try to mine with the [our simple miner script](https://github.com/ocvcoin/ocv_miner).
 
-There are also [regression and integration tests](/test), written
-in Python.
-These tests can be run (if the [test dependencies](/test) are installed) with: `test/functional/test_runner.py`
 
-The CI (Continuous Integration) systems make sure that every pull request is built for Windows, Linux, and macOS,
-and that unit/sanity tests are run automatically.
+Some Online Services
+----------------
 
-### Manual Quality Assurance (QA) Testing
+Block Explorer: https://explorer.ocvcoin.com/
 
-Changes should be tested by somebody other than the developer who wrote the
-code. This is especially important for large or high-risk changes. It is useful
-to add a test plan to the pull request description if testing the changes is
-not straightforward.
+Simple Online Wallet: https://wallet.ocvcoin.com/
 
-Translations
-------------
+Wrapped Ocvcoin Token's Topic: https://bitcointalk.org/index.php?topic=5386036.0
 
-Changes to translations as well as new translations can be submitted to
-[Ocvcoin Core's Transifex page](https://www.transifex.com/ocvcoin/ocvcoin/).
+Ocvcoin <=> Wrapped Ocvcoin Token Cross Transfer Service: https://bridge.ocvcoin.com/
 
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
+Repositories: https://github.com/ocvcoin?tab=repositories
 
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
+Stats & Tools: https://stats.ocvcoin.com/
+
+
+
