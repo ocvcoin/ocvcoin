@@ -3,7 +3,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-
+// Our ocv2 Algo doesn't work except on x64-based processors! It will not work with processors like ARM.
 
 #include <primitives/block.h>
 
@@ -22,11 +22,73 @@
 
 /*-----------------------------------------------------------------------------------*/
 
-// Must be Version 70bbf17b133496bd7d54d034b0f94bd869e0e810 !
-// Otherwise it won't work.
-// Download Link: https://github.com/opencv/opencv/archive/70bbf17b133496bd7d54d034b0f94bd869e0e810.zip
+// This file(block.cpp) requires OpenCV Version 70bbf17b133496bd7d54d034b0f94bd869e0e810 !
+// Read below to be able to compile and add to the project!
+
 
 #include <opencv2/opencv.hpp>
+
+
+/*
+
+# Unnecessary modules are disabled.
+# The most important part is that "avx" "sse3" "sse4.1" "sse4.2" should be disabled on supported processors.
+# Compiling OpenCV Version 70bbf17b133496bd7d54d034b0f94bd869e0e810 as static lib on Ubuntu 21 for 64 BIT LINUX and WINDOWS
+# Commands:
+
+sudo apt update
+sudo apt install  git cmake unzip g++-mingw-w64-x86-64-posix gcc g++ wget
+
+cd /tmp
+wget https://github.com/opencv/opencv/archive/70bbf17b133496bd7d54d034b0f94bd869e0e810.zip
+unzip 70bbf17b133496bd7d54d034b0f94bd869e0e810.zip
+cd opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810
+mkdir build && cd build
+
+
+
+# FOR 64BIT WINDOWS
+env CC="x86_64-w64-mingw32-gcc" CFLAGS=" -pipe -O2" CXX="x86_64-w64-mingw32-g++" CXXFLAGS=" -pipe -O2" cmake  -DCMAKE_SYSTEM_NAME=Windows -DCMAKE_C_COMPILER_TARGET=x86_64-w64-mingw32 -DCMAKE_CXX_COMPILER_TARGET=x86_64-w64-mingw32 -DCMAKE_SKIP_RPATH="ON" -DCMAKE_EXE_LINKER_FLAGS="-static" -DCMAKE_FIND_LIBRARY_SUFFIXES=".a" -DBUILD_opencv_flann=OFF -DBUILD_opencv_ml=OFF -DBUILD_opencv_video=OFF -DBUILD_opencv_shape=OFF -DBUILD_opencv_videoio=OFF -DBUILD_opencv_highgui=OFF -DBUILD_opencv_objdetect=OFF -DBUILD_opencv_superres=OFF -DBUILD_opencv_ts=OFF -DBUILD_opencv_features2d=OFF -DBUILD_opencv_calib3d=OFF -DBUILD_opencv_stitching=OFF -DBUILD_opencv_videostab=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DBUILD_ZLIB=OFF -DBUILD_TIFF=OFF -DBUILD_JASPER=OFF -DBUILD_JPEG=OFF -DBUILD_PNG=OFF -DBUILD_OPENEXR=OFF -DBUILD_TBB=OFF -DBUILD_WITH_STATIC_CRT=ON -DINSTALL_C_EXAMPLES=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_1394=OFF -DWITH_AVFOUNDATION=OFF -DWITH_CARBON=OFF -DWITH_CAROTENE=OFF -DWITH_VTK=OFF -DWITH_CUDA=OFF -DWITH_CUFFT=OFF -DWITH_CUBLAS=OFF -DWITH_NVCUVID=OFF -DWITH_EIGEN=OFF -DWITH_VFW=OFF -DWITH_FFMPEG=OFF -DWITH_GSTREAMER=OFF -DWITH_GSTREAMER_0_10=OFF -DWITH_GTK=OFF -DWITH_GTK_2_X=OFF -DWITH_IPP=OFF -DWITH_JASPER=OFF -DWITH_JPEG=OFF -DWITH_WEBP=OFF -DWITH_OPENEXR=OFF -DWITH_OPENGL=OFF -DWITH_OPENVX=OFF -DWITH_OPENNI=OFF -DWITH_OPENNI2=OFF -DWITH_PNG=OFF -DWITH_GDCM=OFF -DWITH_PVAPI=OFF -DWITH_GIGEAPI=OFF -DWITH_ARAVIS=OFF -DWITH_QT=OFF -DWITH_WIN32UI=OFF -DWITH_QUICKTIME=OFF -DWITH_QTKIT=OFF -DWITH_TBB=OFF -DWITH_OPENMP=OFF -DWITH_CSTRIPES=OFF -DWITH_PTHREADS_PF=OFF -DWITH_TIFF=OFF -DWITH_UNICAP=OFF -DWITH_V4L=OFF -DWITH_LIBV4L=OFF -DWITH_DSHOW=OFF -DWITH_MSMF=OFF -DWITH_XIMEA=OFF -DWITH_XINE=OFF -DWITH_CLP=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL_SVM=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_DIRECTX=OFF -DWITH_INTELPERC=OFF -DWITH_IPP_A=OFF -DWITH_MATLAB=OFF -DWITH_VA=OFF -DWITH_VA_INTEL=OFF -DWITH_GDAL=OFF -DWITH_GPHOTO2=OFF -DWITH_LAPACK=OFF -DCMAKE_C_FLAGS="-mno-avx -msse3 -mno-ssse3 -mno-sse4.1 -mno-sse4.2" -DCMAKE_CXX_FLAGS="-mno-avx -msse3 -mno-ssse3 -mno-sse4.1 -mno-sse4.2" -DINSTALL_CREATE_DISTRIB=ON ..
+
+
+# FOR 64BIT LINUX
+env CC="gcc -m64" CFLAGS=" -pipe -O2" CXX="g++ -m64" CXXFLAGS=" -pipe -O2"  cmake -DCMAKE_SKIP_RPATH="ON" -DCMAKE_EXE_LINKER_FLAGS="-static" -DCMAKE_FIND_LIBRARY_SUFFIXES=".a" -DBUILD_opencv_flann=OFF -DBUILD_opencv_ml=OFF -DBUILD_opencv_video=OFF -DBUILD_opencv_shape=OFF -DBUILD_opencv_videoio=OFF -DBUILD_opencv_highgui=OFF -DBUILD_opencv_objdetect=OFF -DBUILD_opencv_superres=OFF -DBUILD_opencv_ts=OFF -DBUILD_opencv_features2d=OFF -DBUILD_opencv_calib3d=OFF -DBUILD_opencv_stitching=OFF -DBUILD_opencv_videostab=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DBUILD_ZLIB=OFF -DBUILD_TIFF=OFF -DBUILD_JASPER=OFF -DBUILD_JPEG=OFF -DBUILD_PNG=OFF -DBUILD_OPENEXR=OFF -DBUILD_TBB=OFF -DBUILD_WITH_STATIC_CRT=ON -DINSTALL_C_EXAMPLES=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_1394=OFF -DWITH_AVFOUNDATION=OFF -DWITH_CARBON=OFF -DWITH_CAROTENE=OFF -DWITH_VTK=OFF -DWITH_CUDA=OFF -DWITH_CUFFT=OFF -DWITH_CUBLAS=OFF -DWITH_NVCUVID=OFF -DWITH_EIGEN=OFF -DWITH_VFW=OFF -DWITH_FFMPEG=OFF -DWITH_GSTREAMER=OFF -DWITH_GSTREAMER_0_10=OFF -DWITH_GTK=OFF -DWITH_GTK_2_X=OFF -DWITH_IPP=OFF -DWITH_JASPER=OFF -DWITH_JPEG=OFF -DWITH_WEBP=OFF -DWITH_OPENEXR=OFF -DWITH_OPENGL=OFF -DWITH_OPENVX=OFF -DWITH_OPENNI=OFF -DWITH_OPENNI2=OFF -DWITH_PNG=OFF -DWITH_GDCM=OFF -DWITH_PVAPI=OFF -DWITH_GIGEAPI=OFF -DWITH_ARAVIS=OFF -DWITH_QT=OFF -DWITH_WIN32UI=OFF -DWITH_QUICKTIME=OFF -DWITH_QTKIT=OFF -DWITH_TBB=OFF -DWITH_OPENMP=OFF -DWITH_CSTRIPES=OFF -DWITH_PTHREADS_PF=OFF -DWITH_TIFF=OFF -DWITH_UNICAP=OFF -DWITH_V4L=OFF -DWITH_LIBV4L=OFF -DWITH_DSHOW=OFF -DWITH_MSMF=OFF -DWITH_XIMEA=OFF -DWITH_XINE=OFF -DWITH_CLP=OFF -DWITH_OPENCL=OFF -DWITH_OPENCL_SVM=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_DIRECTX=OFF -DWITH_INTELPERC=OFF -DWITH_IPP_A=OFF -DWITH_MATLAB=OFF -DWITH_VA=OFF -DWITH_VA_INTEL=OFF -DWITH_GDAL=OFF -DWITH_GPHOTO2=OFF -DWITH_LAPACK=OFF -DCMAKE_C_FLAGS="-mno-avx -msse3 -mno-ssse3 -mno-sse4.1 -mno-sse4.2" -DCMAKE_CXX_FLAGS="-mno-avx -msse3 -mno-ssse3 -mno-sse4.1 -mno-sse4.2" -DINSTALL_CREATE_DISTRIB=ON ..
+
+
+
+make
+
+
+
+
+# After the compilation is complete, you can see the parameters you need to declare to the compiler with the following command.
+
+
+tail -3 unix-install/opencv.pc
+
+
+# Returns output similar to this.
+#
+# Libs: -L${exec_prefix}/lib -lopencv_imgcodecs320 -lopencv_photo320 -lopencv_imgproc320 -lopencv_core320
+# Libs.private: -L${exec_prefix}/share/OpenCV/3rdparty/lib -lzlib -lstdc++
+# Cflags: -I${includedir_old} -I${includedir_new}
+
+
+
+
+
+
+# You can add the OpenCV library to the any project you want by using the following compiler flags.
+# These flags have been prepared using the above output. It may be different for you.
+
+#  -L/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/lib -lopencv_imgcodecs320 -lopencv_photo320 -lopencv_imgproc320 -lopencv_core320
+
+#  -L/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/3rdparty/lib -lzlib -lstdc++
+
+#  -I/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/include/opencv -I/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/include
+
+*/
+
 
 /*-----------------------------------------------------------------------------------*/
 
