@@ -37,7 +37,7 @@
 # Commands:
 
 sudo apt update
-sudo apt install  git cmake unzip g++-mingw-w64-x86-64-posix gcc g++ wget
+sudo apt install  git cmake unzip g++-mingw-w64-x86-64-posix gcc g++ wget pkg-config
 
 cd /tmp
 wget https://github.com/opencv/opencv/archive/70bbf17b133496bd7d54d034b0f94bd869e0e810.zip
@@ -56,36 +56,14 @@ env CC="gcc -m64" CFLAGS=" -pipe -O2" CXX="g++ -m64" CXXFLAGS=" -pipe -O2"  cmak
 
 
 
-make
+make && make install
+
+# When you run the command below, it will give you the compiler flags you need to add the compiled OpenCV static lib files to the any project you want.
+
+env PKG_CONFIG_LIBDIR=$PWD/release/lib/pkgconfig pkg-config --static --cflags --libs opencv
 
 
 
-
-# After the compilation is complete, you can see the parameters you need to declare to the compiler with the following command.
-
-
-tail -3 unix-install/opencv.pc
-
-
-# Returns output similar to this.
-#
-# Libs: -L${exec_prefix}/lib -lopencv_imgcodecs320 -lopencv_photo320 -lopencv_imgproc320 -lopencv_core320
-# Libs.private: -L${exec_prefix}/share/OpenCV/3rdparty/lib -lzlib -lstdc++
-# Cflags: -I${includedir_old} -I${includedir_new}
-
-
-
-
-
-
-# You can add the OpenCV library to the any project you want by using the following compiler flags.
-# These flags have been prepared using the above output. It may be different for you.
-
-#  -L/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/release/lib -lopencv_imgcodecs320 -lopencv_photo320 -lopencv_imgproc320 -lopencv_core320
-
-#  -L/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/release/share/OpenCV/3rdparty/lib -lzlib -lstdc++
-
-#  -I/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/release/include/opencv -I/tmp/opencv-70bbf17b133496bd7d54d034b0f94bd869e0e810/build/release/include
 
 */
 
