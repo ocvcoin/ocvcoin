@@ -3,7 +3,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-// Our ocv2 Algo doesn't work except on x64-based processors! It will not work with processors like ARM.
+
+// Important
+// Our ocv2 algo only works with 64-bit x86 based processors! Does not work with ARM processors!
+
+
+
+
 
 #include <primitives/block.h>
 
