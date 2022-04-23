@@ -60,7 +60,7 @@ make && make install
 
 # When you run the command below, it will give you the compiler flags you need to add the compiled OpenCV static lib files to the any project you want.
 
-env PKG_CONFIG_LIBDIR=$PWD/release/lib/pkgconfig pkg-config --static --cflags --libs opencv
+env PKG_CONFIG_LIBDIR=$PWD/unix-install pkg-config --static --cflags --libs opencv
 
 
 
