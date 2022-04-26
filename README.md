@@ -37,7 +37,7 @@ This script also activates the background daemon and makes you a full node.
 
 Tested on Ubuntu 16 , 18 , 20 and 21
 
-Run script:
+You can run script via this command:
 ```
 wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU_AUTO_BUILD_AND_INSTALL.sh | sudo bash
 
