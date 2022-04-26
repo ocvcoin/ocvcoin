@@ -28,6 +28,26 @@ HOW TO MINE OCVCOIN: [https://youtu.be/fNamC3YEdFc](https://youtu.be/fNamC3YEdFc
 No mining pool yet. You can try to mine with the [our simple miner script](https://github.com/ocvcoin/ocv_miner).
 
 
+Build From Source & Install
+----------------
+
+Ubuntu automatic compiler & installer script
+
+Tested on Ubuntu 16 , 18 , 20 and 21
+
+Run script:
+```
+wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU_AUTO_BUILD_AND_INSTALL.sh | sudo bash
+
+```
+
+You can start the graphical interface with this command:
+```
+ocvcoin-qt
+
+```
+
+
 Some Online Services
 ----------------
 
