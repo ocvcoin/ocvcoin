@@ -33,6 +33,8 @@ Build From Source & Install
 
 Ubuntu automatic compiler & installer script
 
+This script also activates the background daemon and makes you a full node.
+
 Tested on Ubuntu 16 , 18 , 20 and 21
 
 Run script:
