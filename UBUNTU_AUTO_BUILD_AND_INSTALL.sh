@@ -22,7 +22,7 @@ apt-get update
 
 apt-get -y install build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 cmake git byacc bison libdb-dev libdb++-dev
 
-if [ "$(lsb_release -c -s)" = "xenial" ]; then
+if [ "$(lsb_release -c -s)" = "xenial" ] || [ "$(lsb_release -c -s)" = "yakkety" ]; then
   add-apt-repository -y ppa:ubuntu-toolchain-r/test
   apt-get update
   apt-get -y install gcc-7 g++-7
@@ -86,7 +86,7 @@ sed -i 's:/usr/bin/ocvcoind:/usr/local/bin/ocvcoind:g' /etc/systemd/system/ocvco
 
 
 
-if [ "$(lsb_release -c -s)" = "xenial" ]; then
+if [ "$(lsb_release -c -s)" = "xenial" ] || [ "$(lsb_release -c -s)" = "yakkety" ]; then
   sed -i 's:ExecStartPre=/bin/chgrp ocvcoin /etc/ocvcoin::g' /etc/systemd/system/ocvcoind.service
   chgrp ocvcoin /etc/ocvcoin
   mkdir /var/lib/ocvcoind
