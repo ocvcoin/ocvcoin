@@ -6,11 +6,13 @@ Ocvcoin is a modified version of Bitcoin. Heavy computations are used for resist
 
 HOW TO INSTALL OCVCOIN CORE: [https://youtu.be/ZiHZtsnyIyw](https://youtu.be/ZiHZtsnyIyw)
 
-COMMUNITY: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
+BITCOINTALK: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
 
 DISCORD: [https://discord.gg/NYYarPzNRA](https://discord.gg/NYYarPzNRA)
 
 TWITTER: [https://twitter.com/ocvcoin](https://twitter.com/ocvcoin)
+
+REDDIT: [https://www.reddit.com/r/ocvcoin/](https://www.reddit.com/r/ocvcoin/)
 
 Dowload
 ----------------
@@ -23,9 +25,7 @@ OCVCOIN CORE: [ocvcoin-22.0.0-win64-setup.exe](https://github.com/ocvcoin/ocvcoi
 How Can I Mining?
 ----------------
 
-HOW TO MINE OCVCOIN: [https://youtu.be/fNamC3YEdFc](https://youtu.be/fNamC3YEdFc)
-
-No mining pool yet. You can try to mine with the [our simple miner script](https://github.com/ocvcoin/ocv_miner).
+HOW TO MINE OCVCOIN: [https://youtu.be/REuNrxk2MwE](https://youtu.be/REuNrxk2MwE)
 
 
 Build From Source & Install
