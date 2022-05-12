@@ -43,6 +43,9 @@ wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU_AUTO_
 
 ```
 
+If you want to customize it, all the settings are here: `/etc/ocvcoin/ocvcoin.conf` 
+(don't forget to run `service ocvcoind restart` after editing!)
+
 You can start the graphical interface with this command:
 ```
 ocvcoin-qt
