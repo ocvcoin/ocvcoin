@@ -10,6 +10,8 @@ BITCOINTALK: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcoin
 
 DISCORD: [https://discord.gg/NYYarPzNRA](https://discord.gg/NYYarPzNRA)
 
+TELEGRAM: [https://t.me/+TJHjt1IvFfAxMGU0](https://t.me/+TJHjt1IvFfAxMGU0)
+
 TWITTER: [https://twitter.com/ocvcoin](https://twitter.com/ocvcoin)
 
 REDDIT: [https://www.reddit.com/r/ocvcoin/](https://www.reddit.com/r/ocvcoin/)
@@ -53,7 +55,7 @@ ocvcoin-qt
 ```
 
 
-Some Online Services
+Some Links
 ----------------
 
 Block Explorer: https://explorer.ocvcoin.com/
