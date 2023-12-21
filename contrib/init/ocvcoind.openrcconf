@@ -1,0 +1,33 @@
+# /etc/conf.d/ocvcoind: config file for /etc/init.d/ocvcoind
+
+# Config file location
+#OCVCOIND_CONFIGFILE="/etc/ocvcoin/ocvcoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $OCVCOIND_USER)
+#OCVCOIND_PIDDIR="/var/run/ocvcoind"
+
+# What filename to give the pidfile
+#OCVCOIND_PIDFILE="${OCVCOIND_PIDDIR}/ocvcoind.pid"
+
+# Where to write ocvcoind data (be mindful that the blockchain is large)
+#OCVCOIND_DATADIR="/var/lib/ocvcoind"
+
+# User and group to own ocvcoind process
+#OCVCOIND_USER="ocvcoin"
+#OCVCOIND_GROUP="ocvcoin"
+
+# Path to ocvcoind executable
+#OCVCOIND_BIN="/usr/bin/ocvcoind"
+
+# Nice value to run ocvcoind under
+#OCVCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#OCVCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for ocvcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+OCVCOIND_SIGTERM_TIMEOUT=600

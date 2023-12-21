@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Ocvcoin Core Security Policy
+    url: https://github.com/ocvcoin/ocvcoin/blob/master/SECURITY.md
+    about: View security policy
+  - name: Bitcoin Core Developers
+    url: https://bitcoincore.org
+    about: Ocvcoin Core homepage

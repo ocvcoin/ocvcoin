@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[o:ocvcoin:p:ocvcoin:r:qt-translation-026x]
+file_filter = src/qt/locale/ocvcoin_<lang>.xlf
+source_file = src/qt/locale/ocvcoin_en.xlf
+source_lang = en
