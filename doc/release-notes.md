@@ -1,20 +1,12 @@
 26.0 Release Notes
 ==================
 
-Ocvcoin Core version 26.0 is now available from:
 
-  <https://bitcoincore.org/bin/ocvcoin-core-26.0/>
 
 This release includes new features, various bug fixes and performance
 improvements, as well as updated translations.
 
-Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/ocvcoin/ocvcoin/issues>
-
-To receive security and update notifications, please subscribe to:
-
-  <https://bitcoincore.org/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -44,7 +36,7 @@ P2P and network changes
 -----------------------
 
 - Experimental support for the v2 transport protocol defined in
-  [BIP324](https://github.com/ocvcoin/bips/blob/master/bip-0324.mediawiki) was added.
+  [BIP324](https://github.com/bitcoin/bips/blob/master/bip-0324.mediawiki) was added.
   It is off by default, but when enabled using `-v2transport` it will be negotiated
   on a per-connection basis with other peers that support it too. The existing
   v1 transport protocol remains fully supported.
@@ -80,9 +72,9 @@ Updated RPCs
 - A new argument `v2transport` was added to the `addnode` RPC to indicate whether a v2 transaction connection
   is to be attempted with the peer.
 
-- [Miniscript](https://ocvcoin.sipa.be/miniscript/) expressions can now be used in Taproot descriptors for all RPCs working with descriptors. (#27255)
+- [Miniscript](https://bitcoin.sipa.be/miniscript/) expressions can now be used in Taproot descriptors for all RPCs working with descriptors. (#27255)
 
-- `finalizepsbt` is now able to finalize a PSBT with inputs spending [Miniscript](https://ocvcoin.sipa.be/miniscript/)-compatible Taproot leaves. (#27255)
+- `finalizepsbt` is now able to finalize a PSBT with inputs spending [Miniscript](https://bitcoin.sipa.be/miniscript/)-compatible Taproot leaves. (#27255)
 
 Changes to wallet related RPCs can be found in the Wallet section below.
 
@@ -232,7 +224,7 @@ src/ocvcoin-cli -named bumpfee txid options='{"fee_rate": 100}'
   is complete) containing the serialized transaction
   suitable for RPC `sendrawtransaction`. (#28414)
 
-- It's now possible to use [Miniscript](https://ocvcoin.sipa.be/miniscript/) inside Taproot leaves for descriptor wallets. (#27255)
+- It's now possible to use [Miniscript](https://bitcoin.sipa.be/miniscript/) inside Taproot leaves for descriptor wallets. (#27255)
 
 GUI changes
 -----------
@@ -332,4 +324,4 @@ Thanks to everyone who directly contributed to this release:
 - Yusuf Sahin HAMZA
 
 As well as to everyone that helped with translations on
-[Transifex](https://www.transifex.com/ocvcoin/ocvcoin/).
+[Transifex](https://www.transifex.com/bitcoin/bitcoin/).
