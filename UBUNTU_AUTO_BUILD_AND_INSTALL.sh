@@ -17,13 +17,18 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 
 set -e
-
 																
-apt-get update																
+apt-get update	
+
+set +e															
 
 apt-get -y install software-properties-common
 
 add-apt-repository -y universe
+
+add-apt-repository -y contrib main non-free
+
+apt-get update
 
 apt-get -y install build-essential
 apt-get -y install libtool
@@ -45,7 +50,7 @@ apt-get -y upgrade ca-certificates
 
 
 
-
+set -e
 
 
 
@@ -148,9 +153,9 @@ cd objdir
 
 /tmp/gcc_build/gcc-releases-gcc-13.2.0/configure --enable-languages=c,c++ --disable-multilib
 
-
+set +e
 apt-get -y install flex
-
+set -e
 make
 make install	
 	
