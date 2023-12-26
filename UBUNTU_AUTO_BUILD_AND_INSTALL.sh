@@ -216,7 +216,7 @@ mkdir /tmp/ocvcoin
 
 cd /tmp/ocvcoin
 
-git clone --depth 1 https://github.com/ocvcoin/ocvcoin.git ocvcoin
+git clone --depth=1 https://github.com/ocvcoin/ocvcoin.git ocvcoin
 
 
 
