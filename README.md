@@ -33,20 +33,21 @@ Automatic build script for Ubuntu & Debian
 
 This script build Ocvcoin Core from source and assign it to your system as a service.
 
-Just run this command:
+Build & Install Command:
 ```
 wget -qO - https://raw.githubusercontent.com/ocvcoin/ocvcoin/master/UBUNTU_AUTO_BUILD_AND_INSTALL.sh | sudo bash
 
 ```
 
-If you want to customize it, all the settings are here: `/etc/ocvcoin/ocvcoin.conf` 
-(don't forget to run: `sudo service ocvcoind restart`)
+If you want to customize it, settings file: `/etc/ocvcoin/ocvcoin.conf`
 
-Also, if you are using one of the Ubuntu desktop environment versions, you can launch the graphical interface with this command:
-```
-ocvcoin-qt
+Graphical Interface Launch Command: 
 
 ```
+ocvcoin-qt -listen=0
+```
+
+
 
 
 Some Links
