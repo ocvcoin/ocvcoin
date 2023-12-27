@@ -256,6 +256,20 @@ mkdir /etc/ocvcoin
 cp /tmp/ocvcoin/ocvcoin/share/examples/ocvcoin.conf /etc/ocvcoin/ocvcoin.conf
 
 
+PASS_WORD="$(env LC_CTYPE=C tr -dc a-zA-Z0-9 < /dev/urandom| head -c 48; echo)"
+
+
+
+sed -i 's/#rpcuser=<user>/rpcuser=ocvcoinrpc/g' /etc/ocvcoin/ocvcoin.conf
+
+sed -i "s/#rpcpassword=<pw>/rpcpassword=${PASS_WORD}/g" /etc/ocvcoin/ocvcoin.conf
+
+sed -i 's/#server=1/server=1/g' /etc/ocvcoin/ocvcoin.conf
+
+
+
+
+
 
 cp /tmp/ocvcoin/ocvcoin/contrib/init/ocvcoind.service /etc/systemd/system/ocvcoind.service
 
@@ -283,29 +297,18 @@ systemctl restart ocvcoind.service || systemctl start ocvcoind.service
 
 
 
-cronjob_editor () {         
-# usage: cronjob_editor '<interval>' '<command>' <add|remove>
 
-if [[ -z "$1" ]] ;then printf " no interval specified\n" ;fi
-if [[ -z "$2" ]] ;then printf " no command specified\n" ;fi
-if [[ -z "$3" ]] ;then printf " no action specified\n" ;fi
-
-if [[ "$3" == add ]] ;then
-    # add cronjob, no duplication:
-    ( crontab -l | grep -v -F -w "$2" ; echo "$1 $2" ) | crontab -
-elif [[ "$3" == remove ]] ;then
-    # remove cronjob:
-    ( crontab -l | grep -v "$2" ) | crontab -
-fi 
-} 
-
-cronjob_editor "@reboot" "/pow_server.py" "remove"
-
-cronjob_editor "@reboot" "/usr/local/bin/ocvcoind" "remove"
 
 
 if [ -f "/usr/local/bin/ocvcoind" ]; then
-    echo -e "\n\n\n\nOcvcoin Core has been successfully installed!\nIf you want to customize it, all the settings are here: /etc/ocvcoin/ocvcoin.conf\n(don't forget to run: sudo service ocvcoind restart)\nAlso, if you are using one of the Ubuntu desktop environment versions, you can launch the graphical interface with this command: ocvcoin-qt\n"
+
+apt-get -y install libxcb-xinerama0
+
+apt-get -y install libxcb-cursor0
+
+
+
+    echo -e "\n\n\n\nOcvcoin Core has been installed!\n\nrpc username: ocvcoinrpc\n\nrpc password: ${PASS_WORD}\n\nsettings file: /etc/ocvcoin/ocvcoin.conf\n\ngraphical interface launch command: ocvcoin-qt -listen=0\n"
 else 
     echo -e "\ninstallation failed!\n"
 fi
