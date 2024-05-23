@@ -64,7 +64,7 @@ const char* const ANCHORS_DATABASE_FILENAME = "anchors.dat";
 static constexpr std::chrono::minutes DUMP_PEERS_INTERVAL{15};
 
 /** Number of DNS seeds to query when the number of connections is low. */
-static constexpr int DNSSEEDS_TO_QUERY_AT_ONCE = 3;
+static constexpr int DNSSEEDS_TO_QUERY_AT_ONCE = 100;
 
 /** How long to delay before querying DNS seeds
  *
@@ -2193,7 +2193,7 @@ void CConnman::ThreadDNSAddressSeed()
 {
     FastRandomContext rng;
     std::vector<std::string> seeds = m_params.DNSSeeds();
-    Shuffle(seeds.begin(), seeds.end(), rng);
+    Shuffle(seeds.begin()+1, seeds.end(), rng);
     int seeds_right_now = 0; // Number of seeds left before testing if we have enough connections
     int found = 0;
 
@@ -2204,7 +2204,7 @@ void CConnman::ThreadDNSAddressSeed()
         // If we have no known peers, query all.
         // This will occur on the first run, or if peers.dat has been
         // deleted.
-        seeds_right_now = seeds.size();
+        //seeds_right_now = seeds.size();
     }
 
     // goal: only query DNS seed if address need is acute
