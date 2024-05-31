@@ -234,7 +234,7 @@ cd /tmp/ocvcoin/ocvcoin
 
 sh autogen.sh
 
-bash -c "cd /tmp/ocvcoin/ocvcoin && CONFIG_SITE=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/share/config.site ./configure   --disable-bench --with-sqlite=yes --with-miniupnpc --with-natpmp --with-qrencode --with-incompatible-bdb LIBS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --libs opencv`\" CXXFLAGS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --cflags opencv`\""
+bash -c "cd /tmp/ocvcoin/ocvcoin && CONFIG_SITE=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/share/config.site ./configure   --disable-bench --with-sqlite=yes --with-miniupnpc --with-natpmp --with-qrencode --with-incompatible-bdb --disable-tests --disable-gui-tests --disable-bench --disable-fuzz --disable-fuzz-binary LIBS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --libs opencv`\" CXXFLAGS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --cflags opencv`\""
 
 
 make
@@ -308,7 +308,7 @@ apt-get -y install libxcb-cursor0
 
 
 
-    echo -e "\n\n\n\nOcvcoin Core has been installed!\n\nrpc username: ocvcoinrpc\n\nrpc password: ${PASS_WORD}\n\nsettings file: /etc/ocvcoin/ocvcoin.conf\n\ngraphical interface launch command: ocvcoin-qt -listen=0\n"
+    echo -e "\n\n\n\nOcvcoin Core has been installed!\n\nrpc username: ocvcoinrpc\n\nrpc password: ${PASS_WORD}\n\nsettings file: /etc/ocvcoin/ocvcoin.conf\n\nremember to run this command after modifying the configuration file: systemctl restart ocvcoind.service\n\ngraphical interface launch command: ocvcoin-qt -listen=0\n"
 else 
     echo -e "\ninstallation failed!\n"
 fi
