@@ -2193,7 +2193,7 @@ void CConnman::ThreadDNSAddressSeed()
 {
     FastRandomContext rng;
     std::vector<std::string> seeds = m_params.DNSSeeds();
-    Shuffle(seeds.begin()+1, seeds.end(), rng);
+    Shuffle(seeds.begin()+(seeds.size() > DNSSEEDS_TO_QUERY_AT_ONCE ? 1 : 0), seeds.end(), rng);
     int seeds_right_now = 0; // Number of seeds left before testing if we have enough connections
     int found = 0;
 
