@@ -4,14 +4,6 @@ Ocvcoin
 
 an open-source peer-to-peer digital currency
 
-BITCOINTALK: [https://bitcointalk.org/index.php?topic=5364831.0](https://bitcointalk.org/index.php?topic=5364831.0)
-
-DISCORD: [https://discord.gg/NYYarPzNRA](https://discord.gg/NYYarPzNRA)
-
-TWITTER: [https://twitter.com/ocvcoin](https://twitter.com/ocvcoin)
-
-REDDIT: [https://www.reddit.com/r/ocvcoin/](https://www.reddit.com/r/ocvcoin/)
-
 Dowload
 ----------------
 
@@ -46,24 +38,4 @@ Graphical Interface Launch Command:
 ```
 ocvcoin-qt -listen=0
 ```
-
-
-
-
-Some Links
-----------------
-
-Block Explorer: https://explorer.ocvcoin.com/
-
-Simple Online Wallet: https://wallet.ocvcoin.com/
-
-Wrapped Ocvcoin Token's Topic: https://bitcointalk.org/index.php?topic=5386036.0
-
-Ocvcoin <=> Wrapped Ocvcoin Token Cross Transfer Service: https://bridge.ocvcoin.com/
-
-Repositories: https://github.com/ocvcoin?tab=repositories
-
-Stats & Tools: https://stats.ocvcoin.com/
-
-
 
