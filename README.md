@@ -4,18 +4,12 @@ Ocvcoin
 
 an open-source peer-to-peer digital currency
 
-Dowload
+Dowloads
 ----------------
 
-(ONLY FOR 64 BIT WINDOWS)
+OCVCOIN CORE (ONLY FOR 64 BIT WINDOWS): [ocvcoin-26.0.0-win64-setup.exe](https://github.com/ocvcoin/ocvcoin/releases/download/v26.0/ocvcoin-26.0.0-win64-setup.exe)
 
-OCVCOIN CORE: [ocvcoin-26.0.0-win64-setup.exe](https://github.com/ocvcoin/ocvcoin/releases/download/v26.0/ocvcoin-26.0.0-win64-setup.exe)
-
-
-How Can I Mining?
-----------------
-
-HOW TO MINE OCVCOIN: [https://github.com/ocvcoin/gpuminer/blob/main/README.md](https://github.com/ocvcoin/gpuminer/blob/main/README.md)
+GPU MINER: [https://github.com/ocvcoin/gpuminer/blob/main/README.md](https://github.com/ocvcoin/gpuminer/blob/main/README.md)
 
 
 Build From Source (x86-based 64-bit processor required)
