@@ -46,7 +46,7 @@ NO_NATPMP ?=
 MULTIPROCESS ?=
 LTO ?=
 NO_HARDEN ?=
-FALLBACK_DOWNLOAD_PATH ?= https://bitcoincore.org/depends-sources
+FALLBACK_DOWNLOAD_PATH ?= https://github.com/ocvcoin/depends-sources/raw/refs/heads/main
 
 C_STANDARD ?= c11
 CXX_STANDARD ?= c++17
