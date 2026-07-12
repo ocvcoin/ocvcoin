@@ -1,13 +1,13 @@
 #!/bin/bash
-printf "
+cat << 'EOF'
  ██████╗  ██████╗██╗   ██╗ ██████╗ ██████╗ ██╗███╗   ██╗
 ██╔═══██╗██╔════╝██║   ██║██╔════╝██╔═══██╗██║████╗  ██║
 ██║   ██║██║     ██║   ██║██║     ██║   ██║██║██╔██╗ ██║
 ██║   ██║██║     ╚██╗ ██╔╝██║     ██║   ██║██║██║╚██╗██║
 ╚██████╔╝╚██████╗ ╚████╔╝ ╚██████╗╚██████╔╝██║██║ ╚████║
  ╚═════╝  ╚═════╝  ╚═══╝   ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═══╝
-                                                        \n"
-
+                                                        
+EOF
 
 if (( $EUID != 0 )); then
     echo -e "\nplease run as root\n"
@@ -15,6 +15,43 @@ if (( $EUID != 0 )); then
 fi
 
 export DEBIAN_FRONTEND=noninteractive
+
+
+
+FREE_RAM_MB=$(awk '/^MemAvailable:/ {print int($2 / 1024)}' /proc/meminfo)
+
+
+if [ -z "$FREE_RAM_MB" ] || [ "$FREE_RAM_MB" -eq 0 ]; then
+    FREE_RAM_MB=$(awk '/^(MemFree|Cached):/ {sum += $2} END {print int(sum / 1024)}' /proc/meminfo)
+fi
+
+if [ -z "$FREE_RAM_MB" ] || [ "$FREE_RAM_MB" -eq 0 ]; then
+    FREE_RAM_MB=$(free -m | awk '/^Mem:/{print $7}')
+fi
+
+
+RECOMMENDED_THREAD_COUNT=$(awk "BEGIN {print int($FREE_RAM_MB / 1024 / 1.5)}")
+
+
+TOTAL_CPU_CORE_COUNT=$(nproc)
+
+
+if [ "$RECOMMENDED_THREAD_COUNT" -lt 1 ]; then
+    RECOMMENDED_THREAD_COUNT=1
+fi
+
+if [ "$TOTAL_CPU_CORE_COUNT" -lt 1 ]; then
+    TOTAL_CPU_CORE_COUNT=1
+fi
+
+
+if [ "$RECOMMENDED_THREAD_COUNT" -le "$TOTAL_CPU_CORE_COUNT" ]; then
+    THREAD_COUNT=$RECOMMENDED_THREAD_COUNT
+else
+    THREAD_COUNT=$TOTAL_CPU_CORE_COUNT
+fi
+
+
 
 set -e
 																
@@ -50,7 +87,7 @@ apt-get -y upgrade ca-certificates
 
 
 
-set -e
+
 
 
 
@@ -86,7 +123,7 @@ vercomp () {
 }
 
 testvercomp () {
-    vercomp $1 $2
+    vercomp "$1" "$2"
     case $? in
         0) op='=';;
         1) op='>';;
@@ -112,13 +149,21 @@ if testvercomp "$(gcc -dumpfullversion -dumpversion)" "10.1" "<"; then
 	echo -e "required minimum GCC version: 10.1\n"
 	echo -e "installing GCC 11 ...\n"
 	
-	set +e
+	
   add-apt-repository -y ppa:ubuntu-toolchain-r/test
   apt-get update
   apt-get -y install gcc-11 g++-11
-  update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 60
-  update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 60	
-	set -e
+
+if [ -f /usr/bin/g++-11 ] && [ -f /usr/bin/gcc-11 ]; then
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 1111
+    update-alternatives --set g++ /usr/bin/g++-11
+    
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 1111
+    update-alternatives --set gcc /usr/bin/gcc-11
+	
+	hash -r
+fi	
+	
 	
 fi
 
@@ -132,6 +177,8 @@ if testvercomp "$(gcc -dumpfullversion -dumpversion)" "10.1" "<"; then
 	echo -e "building GCC from source...\n"
 
 rm -rf /tmp/gcc_build
+
+
 	
 mkdir /tmp/gcc_build
 
@@ -151,13 +198,25 @@ mkdir objdir
 cd objdir
 
 
+apt-get -y install flex
+
+
+
 /tmp/gcc_build/gcc-releases-gcc-13.2.0/configure --enable-languages=c,c++ --disable-multilib
 
-set +e
-apt-get -y install flex
-set -e
-make
-make install	
+
+make -j$THREAD_COUNT
+make install
+
+if [ -f /usr/local/bin/g++ ] && [ -f /usr/local/bin/gcc ]; then
+    update-alternatives --install /usr/bin/g++ g++ /usr/local/bin/g++ 1122
+    update-alternatives --set g++ /usr/local/bin/g++
+    
+    update-alternatives --install /usr/bin/gcc gcc /usr/local/bin/gcc 1122
+    update-alternatives --set gcc /usr/local/bin/gcc
+	
+	hash -r
+fi	
 	
 fi
 
@@ -214,6 +273,8 @@ rm -rf /tmp/ocvcoin
 
 mkdir /tmp/ocvcoin
 
+set -e
+
 cd /tmp/ocvcoin
 
 git clone --depth=1 https://github.com/ocvcoin/ocvcoin.git ocvcoin
@@ -226,7 +287,7 @@ chmod -R 755 /tmp/ocvcoin
 		
  
 cd /tmp/ocvcoin/ocvcoin/depends
-make
+make -j$THREAD_COUNT
 
 SHARED_FOLDER="$(ls -td -- */ | head -n 1 | cut -d'/' -f1)"
 
@@ -237,7 +298,7 @@ sh autogen.sh
 bash -c "cd /tmp/ocvcoin/ocvcoin && CONFIG_SITE=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/share/config.site ./configure   --disable-bench --with-sqlite=yes --with-miniupnpc --with-natpmp --with-qrencode --with-incompatible-bdb --disable-tests --disable-gui-tests --disable-bench --disable-fuzz --disable-fuzz-binary LIBS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --libs opencv`\" CXXFLAGS=\"`env PKG_CONFIG_LIBDIR=/tmp/ocvcoin/ocvcoin/depends/${SHARED_FOLDER}/lib/pkgconfig pkg-config --static --cflags opencv`\""
 
 
-make
+make -j$THREAD_COUNT
 
 make install
 
