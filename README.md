@@ -1,14 +1,13 @@
----
-
 # Ocvcoin
 
-An open-source, peer-to-peer digital currency.
+an open-source, peer-to-peer digital currency
 
 ---
 
 ## Downloads
 
-* **OCVCOIN CORE** (Windows 64-bit only): [ocvcoin-26.0.1-win64-setup.exe](https://github.com/ocvcoin/ocvcoin/releases/download/v26.0.1/ocvcoin-26.0.1-win64-setup.exe)
+* **OCVCOIN CORE**: [ocvcoin-26.0.1-win64-setup.exe](https://github.com/ocvcoin/ocvcoin/releases/download/v26.0.1/ocvcoin-26.0.1-win64-setup.exe)
+  
 * **GPU MINER**: [https://github.com/ocvcoin/gpuminer/blob/main/README.md](https://github.com/ocvcoin/gpuminer/blob/main/README.md)
 
 ---
