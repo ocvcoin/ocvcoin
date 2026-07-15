@@ -264,17 +264,22 @@ else
 fi
 
 
-
-
-
-
-ORIGINAL_BINFMT_STATUS=$(cat /proc/sys/fs/binfmt_misc/status 2>/dev/null)
-
-trap "echo $ORIGINAL_BINFMT_STATUS > /proc/sys/fs/binfmt_misc/status" ERR
-trap "echo $ORIGINAL_BINFMT_STATUS > /proc/sys/fs/binfmt_misc/status" EXIT
-
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
-bash -c "echo 0 > /proc/sys/fs/binfmt_misc/status" # Disable WSL support for Win32 applications.
+
+
+if [ -f /proc/sys/fs/binfmt_misc/status ]; then
+    
+	ORIGINAL_BINFMT_STATUS=$(cat /proc/sys/fs/binfmt_misc/status 2>/dev/null)
+
+	trap "echo \"$ORIGINAL_BINFMT_STATUS\" > /proc/sys/fs/binfmt_misc/status" ERR
+	trap "echo \"$ORIGINAL_BINFMT_STATUS\" > /proc/sys/fs/binfmt_misc/status" EXIT
+
+
+	bash -c "echo 0 > /proc/sys/fs/binfmt_misc/status" # Disable WSL support for Win32 applications.	
+	
+	
+fi
+
 
 set -e
 
@@ -315,7 +320,12 @@ make deploy
 
 cd "${myworkdir}"
 
+set +e
 
-bash -c "echo $ORIGINAL_BINFMT_STATUS > /proc/sys/fs/binfmt_misc/status" # restore value
+
+if [ -f /proc/sys/fs/binfmt_misc/status ]; then
 
 
+	bash -c "echo \"$ORIGINAL_BINFMT_STATUS\" > /proc/sys/fs/binfmt_misc/status" # restore value
+
+fi
