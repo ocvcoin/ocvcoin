@@ -1,0 +1,123 @@
+name: Ocvcoin Core Auto Release
+
+on:
+  push:
+    branches:
+      - master # Change this to the branch you want to track
+
+jobs:
+  check-build-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to create tags and releases
+
+    steps:
+      # 1. Checkout the repository with full git history to check existing tags
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history so we can accurately check existing tags
+
+      # 2. Extract version details from configure.ac and format tag/release names
+      - name: Extract Version from configure.ac
+        id: parse-version
+        run: |
+          # Extract values from configure.ac
+          MAJOR=$(grep -E 'define\(_CLIENT_VERSION_MAJOR,' configure.ac | grep -oE '[0-9]+')
+          MINOR=$(grep -E 'define\(_CLIENT_VERSION_MINOR,' configure.ac | grep -oE '[0-9]+')
+          BUILD=$(grep -E 'define\(_CLIENT_VERSION_BUILD,' configure.ac | grep -oE '[0-9]+')
+          RC=$(grep -E 'define\(_CLIENT_VERSION_RC,' configure.ac | grep -oE '[0-9]+')
+          
+          # Extract the boolean value for IS_RELEASE
+          IS_RELEASE=$(grep -E 'define\(_CLIENT_VERSION_IS_RELEASE,' configure.ac | grep -oE '(true|false)')
+          
+          # Base version structure (Major and Minor are always included)
+          VERSION_SUFFIX="${MAJOR}.${MINOR}"
+          
+          # Append BUILD if it is not 0
+          if [ "$BUILD" -ne 0 ]; then
+            VERSION_SUFFIX="${VERSION_SUFFIX}.${BUILD}"
+          fi
+          
+          # Append RC if it is not 0
+          if [ "$RC" -ne 0 ]; then
+            VERSION_SUFFIX="${VERSION_SUFFIX}-rc${RC}"
+          fi
+          
+          TAG_NAME="v${VERSION_SUFFIX}"
+          RELEASE_NAME="Ocvcoin Core ${VERSION_SUFFIX}"
+          
+          # Save outputs for subsequent steps
+          echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "release_name=${RELEASE_NAME}" >> $GITHUB_OUTPUT
+          echo "is_release=${IS_RELEASE}" >> $GITHUB_OUTPUT
+          
+          echo "Generated Tag Name: ${TAG_NAME}"
+          echo "Generated Release Name: ${RELEASE_NAME}"
+          echo "Release Status (IS_RELEASE): ${IS_RELEASE}"
+
+      # 3. Check if the generated tag already exists in the remote repository
+      - name: Check if Tag Exists
+        id: tag-check
+        run: |
+          TAG="${{ steps.parse-version.outputs.tag_name }}"
+          if git ls-remote --tags origin | grep -q "refs/tags/$TAG$"; then
+            echo "tag_exists=true" >> $GITHUB_OUTPUT
+            echo "WARNING: Tag $TAG already exists!"
+          else
+            echo "tag_exists=false" >> $GITHUB_OUTPUT
+            echo "INFO: Tag $TAG is unique. Proceeding..."
+          fi
+
+      # 4. Run the compilation script
+      - name: Run Build Script
+        run: |
+          sudo bash UBUNTU_AUTO_BUILD_AND_PACK_WINDOWS_SETUP.sh usecurrentpath
+
+      # 5. Locate and validate the generated *-win64-setup.exe file
+      - name: Find and Validate Output EXE File
+        id: find-exe
+        run: |
+          # Finds the first file ending with -win64-setup.exe in the specified directory
+          EXE_PATH=$(find . -maxdepth 1 -type f -name "*-win64-setup.exe" | head -n 1)
+          
+          if [ -z "$EXE_PATH" ]; then
+            echo "exe_exists=false" >> $GITHUB_OUTPUT
+            echo "ERROR: *-win64-setup.exe was not found! The build might have failed."
+            # Fail the step to prevent tag creation on missing assets
+            exit 1
+          else
+            echo "exe_exists=true" >> $GITHUB_OUTPUT
+            echo "exe_path=$EXE_PATH" >> $GITHUB_OUTPUT
+            echo "Successfully located file: $EXE_PATH"
+          fi
+
+      # 6. CASE A: If the tag ALREADY EXISTS, or IS_RELEASE is not true (and EXE exists)
+      # Upload the file as a GitHub Actions Artifact for review/debugging
+      - name: Upload EXE to Actions Artifacts (Log/Review Case)
+        if: |
+          steps.find-exe.outputs.exe_exists == 'true' && (
+            steps.tag-check.outputs.tag_exists == 'true' || 
+            steps.parse-version.outputs.is_release != 'true'
+          )
+        uses: actions/upload-artifact@v4
+        with:
+          name: ocvcoin-core-review-build
+          path: ${{ steps.find-exe.outputs.exe_path }}
+          retention-days: 14
+
+      # 7. CASE B: Only if the EXE is successfully built, the TAG DOES NOT exist, and IS_RELEASE is true
+      # Create a new Git Tag and publish the build as a GitHub Release
+      - name: Create Release and Upload Asset (New Release Case)
+        if: |
+          steps.find-exe.outputs.exe_exists == 'true' &&
+          steps.tag-check.outputs.tag_exists == 'false' && 
+          steps.parse-version.outputs.is_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.parse-version.outputs.tag_name }}
+          name: ${{ steps.parse-version.outputs.release_name }}
+          body: "${{ steps.parse-version.outputs.release_name }} has been automatically compiled and released successfully."
+          draft: false
+          prerelease: false
+          files: ${{ steps.find-exe.outputs.exe_path }}
