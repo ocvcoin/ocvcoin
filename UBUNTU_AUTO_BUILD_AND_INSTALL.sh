@@ -20,36 +20,72 @@ export DEBIAN_FRONTEND=noninteractive
 
 FREE_RAM_MB=$(awk '/^MemAvailable:/ {print int($2 / 1024)}' /proc/meminfo)
 
-
 if [ -z "$FREE_RAM_MB" ] || [ "$FREE_RAM_MB" -eq 0 ]; then
     FREE_RAM_MB=$(awk '/^(MemFree|Cached):/ {sum += $2} END {print int(sum / 1024)}' /proc/meminfo)
+    RAM_DETECTION_METHOD="MemFree + Cached"
+else
+    RAM_DETECTION_METHOD="MemAvailable"
 fi
 
 if [ -z "$FREE_RAM_MB" ] || [ "$FREE_RAM_MB" -eq 0 ]; then
-    FREE_RAM_MB=$(free -m | awk '/^Mem:/{print $7}')
+    FREE_RAM_MB=$(free -m | awk '
+        NR==1 { for(i=1;i<=NF;i++) if($i~/avail/) col=i+1 } 
+        NR==2 { print $col }
+    ')
+    RAM_DETECTION_METHOD="free -m (Available)"
 fi
 
-
-RECOMMENDED_THREAD_COUNT=$(awk "BEGIN {print int($FREE_RAM_MB / 1024 / 1.5)}")
-
-
-TOTAL_CPU_CORE_COUNT=$(nproc)
-
-
-if [ "$RECOMMENDED_THREAD_COUNT" -lt 1 ]; then
-    RECOMMENDED_THREAD_COUNT=1
+if [ -z "$FREE_RAM_MB" ] || [ "$FREE_RAM_MB" -eq 0 ]; then
+    FREE_RAM_MB=1024
+    RAM_DETECTION_METHOD="Default (Fallback)"
 fi
 
-if [ "$TOTAL_CPU_CORE_COUNT" -lt 1 ]; then
-    TOTAL_CPU_CORE_COUNT=1
-fi
+TOTAL_CPU_CORE_COUNT=$(nproc 2>/dev/null || grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 1)
+[ "$TOTAL_CPU_CORE_COUNT" -lt 1 ] && TOTAL_CPU_CORE_COUNT=1
 
+RAM_PER_THREAD_GB="1.5"
+RAM_PER_THREAD_MB=1536
+
+RECOMMENDED_THREAD_COUNT=$(awk -v ram="$FREE_RAM_MB" -v req="$RAM_PER_THREAD_MB" 'BEGIN {
+    val = int(ram / req);
+    print (val < 1) ? 1 : val
+}')
 
 if [ "$RECOMMENDED_THREAD_COUNT" -le "$TOTAL_CPU_CORE_COUNT" ]; then
     THREAD_COUNT=$RECOMMENDED_THREAD_COUNT
+    LIMIT_REASON="RAM Limit"
 else
     THREAD_COUNT=$TOTAL_CPU_CORE_COUNT
+    LIMIT_REASON="CPU Limit"
 fi
+
+if [ "$RECOMMENDED_THREAD_COUNT" -eq "$TOTAL_CPU_CORE_COUNT" ]; then
+    LIMIT_REASON="Balanced"
+fi
+
+
+if [ "$THREAD_COUNT" -lt 1 ]; then
+    THREAD_COUNT=1
+fi
+
+if [ "$THREAD_COUNT" -gt 10 ]; then
+    THREAD_COUNT=10
+fi
+
+
+echo "========================================="
+printf "%-25s : %s\n" "Free RAM" "$FREE_RAM_MB MB"
+printf "%-25s : %s\n" "RAM Detection Method" "$RAM_DETECTION_METHOD"
+printf "%-25s : %s\n" "CPU Core Count" "$TOTAL_CPU_CORE_COUNT"
+printf "%-25s : %s\n" "RAM Per Thread" "$RAM_PER_THREAD_GB GB ($RAM_PER_THREAD_MB MB)"
+echo "-----------------------------------------"
+echo "Formula: int($FREE_RAM_MB / $RAM_PER_THREAD_MB)"
+echo "Recommended Threads: $RECOMMENDED_THREAD_COUNT"
+echo "Comparison: min($RECOMMENDED_THREAD_COUNT, $TOTAL_CPU_CORE_COUNT)"
+echo "Limiting Factor: $LIMIT_REASON"
+echo "========================================="
+printf "SELECTED THREAD COUNT: %s\n" "$THREAD_COUNT"
+echo "========================================="
 
 
 

@@ -171,7 +171,7 @@ bool OptionsModel::Init(bilingual_str& error)
     }
 
     if (!settings.contains("strThirdPartyTxUrls"))
-        settings.setValue("strThirdPartyTxUrls", "https://stats.ocvcoin.com/tx/%s");
+        settings.setValue("strThirdPartyTxUrls", "");
     strThirdPartyTxUrls = settings.value("strThirdPartyTxUrls", "").toString();
 
     if (!settings.contains("fCoinControlFeatures"))
