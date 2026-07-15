@@ -332,4 +332,4 @@ make deploy
 
 cd "${myworkdir}"
 
-
+echo "All set! Your installer (ocvcoin-xx.x.x-win64-setup.exe) was successfully created in: ${myworkdir}"
